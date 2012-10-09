@@ -19,7 +19,7 @@
 (defun counting-references (sys-hash &optional (systems (get-all-systems)))
   "Counting references to systems"
   (dolist (system systems sys-hash)    
-    (dolist (sys (ql::required-systemsb system))
+    (dolist (sys (ql::required-systems system))
       (when (string/= "asdf" sys)
 	(incf (gethash sys sys-hash))))))
 ;(setf ratings (counting-references (create-ratings-hash)))
