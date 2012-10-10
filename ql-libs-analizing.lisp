@@ -1,6 +1,7 @@
 ;(declaim (optimize (debug 3)))
 (defpackage :ql-libs-analizing
-  (:use :cl :asdf :ql)
+  (:use :cl :asdf)
+  (:import-from :ql-dist #:provided-systems #:name #:required-systems)
   (:export #:create-ratings-hash #:get-sorted-ratings
 	   #:get-subset-ratings #:print-ratings))
 
@@ -14,12 +15,12 @@
   "Filling sys-hash by system names"
   (setf sys-hash (make-hash-table :test 'equal))
   (dolist (system systems sys-hash)
-    (setf (gethash (ql::name system) sys-hash) 0)))
+    (setf (gethash (name system) sys-hash) 0)))
 
 (defun counting-references (sys-hash &optional (systems (get-all-systems)))
   "Counting references to systems"
   (dolist (system systems sys-hash)    
-    (dolist (sys (ql::required-systems system))
+    (dolist (sys (required-systems system))
       (when (string/= "asdf" sys)
 	(incf (gethash sys sys-hash))))))
 ;(setf ratings (counting-references (create-ratings-hash)))
