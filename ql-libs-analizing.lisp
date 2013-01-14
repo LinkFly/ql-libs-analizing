@@ -22,6 +22,8 @@
   (dolist (system systems sys-hash)    
     (dolist (sys (required-systems system))
       (when (string/= "asdf" sys)
+        (unless (gethash sys sys-hash)
+          (setf (gethash sys sys-hash) 0))
 	(incf (gethash sys sys-hash))))))
 ;(setf ratings (counting-references (create-ratings-hash)))
 
